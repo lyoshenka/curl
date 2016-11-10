@@ -12,5 +12,10 @@
     "require": {
         "php": ">=5.6",
         "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+              "lyoshenka\\": "src/"
+        }
     }
 }
