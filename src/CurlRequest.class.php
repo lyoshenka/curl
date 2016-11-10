@@ -23,7 +23,7 @@ class CurlRequest
   public function __construct($method = Curl::GET, $url = null, $params = [], $options = [])
   {
     $this->setMethod($method);
-    $this->url     = $url;
+    $this->setUrl($url);
     $this->setParams($params);
     $this->setOptions($options);
   }
@@ -36,6 +36,7 @@ class CurlRequest
       throw new \DomainException('Invalid method: "' . $method . '". Method must be one of: ' . join(', ', Curl::getMethods()));
     }
     $this->method = $method;
+    return $this;
   }
 
   public function setUrl($url)
