@@ -8,13 +8,17 @@ No more `curl_init()`, no more struggling to get response headers, etc.
 
 ### The functional way
 
-    echo \lyoshenka\curl::get('http://httpbin.org/user-agent', [], ['headers' => ['User-Agent' => 'nice!']]);
+```php
+echo \lyoshenka\curl::get('http://httpbin.org/user-agent', [], ['headers' => ['User-Agent' => 'nice!']]);
+```
 
 ### The fluent OO way
 
-    echo \lyoshenka\curl::new()
-      ->setMethod('GET')
-      ->setUrl('http://httpbin.org/user-agent')
-      ->setHeader('User-Agent', 'also nice!')
-      ->send()
-      ->getBody();
+```php
+echo \lyoshenka\curl::init()
+  ->setMethod('GET')
+  ->setUrl('http://httpbin.org/user-agent')
+  ->setHeader('User-Agent', 'also nice!')
+  ->send()
+  ->getBody();
+```

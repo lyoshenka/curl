@@ -10,9 +10,9 @@ class CurlResponse
 
   public function __construct($status, array $headers, $body)
   {
-    $this->status = (int)$status;
+    $this->status  = (int)$status;
     $this->headers = $headers;
-    $this->body = $body;
+    $this->body    = $body;
   }
 
   /**
@@ -42,17 +42,9 @@ class CurlResponse
   }
 
   /**
-   * @return string|mixed
-   */
-  public function getBody()
-  {
-    return $this->isJson() ? $this->getJson() : $this->getRawBody();
-  }
-
-  /**
    * @return string
    */
-  public function getRawBody()
+  public function getBody()
   {
     return $this->body;
   }
@@ -70,11 +62,19 @@ class CurlResponse
    */
   public function getJson()
   {
-    return json_decdoe($this->getBody(), true);
+    return json_decdoe($this->body, true);
+  }
+
+  /**
+   * @return mixed|string
+   */
+  public function getBodySmart()
+  {
+    return $this->isJson() ? $this->getJson() : $this->getBody();
   }
 
   public function __toString()
   {
-    return $this->getRawBody();
+    return $this->getBody();
   }
 }

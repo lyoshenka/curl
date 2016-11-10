@@ -5,9 +5,9 @@ namespace lyoshenka;
 class Curl
 {
   const
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT',
+    GET    = 'GET',
+    POST   = 'POST',
+    PUT    = 'PUT',
     DELETE = 'DELETE';
 
   /**
@@ -82,7 +82,7 @@ class Curl
   /**
    * @return CurlRequest
    */
-  public static function curl()
+  public static function init()
   {
     return new CurlRequest();
   }
