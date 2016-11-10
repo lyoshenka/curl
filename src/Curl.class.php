@@ -78,5 +78,13 @@ class Curl
   {
     return (new CurlRequest($method, $url, $params, $options))->send();
   }
+
+  /**
+   * @return CurlRequest
+   */
+  public static function curl()
+  {
+    return new CurlRequest();
+  }
 }
 

@@ -38,6 +38,12 @@ class CurlRequest
     $this->method = $method;
   }
 
+  public function setUrl($url)
+  {
+    $this->url = $url;
+    return $this;
+  }
+
   public function setParams(array $params)
   {
     $this->params = $params;

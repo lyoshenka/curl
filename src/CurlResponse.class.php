@@ -72,4 +72,9 @@ class CurlResponse
   {
     return json_decdoe($this->getBody(), true);
   }
+
+  public function __toString()
+  {
+    return $this->getRawBody();
+  }
 }
