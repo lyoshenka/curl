@@ -74,7 +74,7 @@ class CurlRequest
 
   public function setOption($name, $value)
   {
-    if (!isset($this->options[$name]))
+    if (!array_key_exists($name, $this->options))
     {
       throw new \DomainException('Invalid option: ' . $name);
     }
