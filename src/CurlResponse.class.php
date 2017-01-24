@@ -62,7 +62,7 @@ class CurlResponse
    */
   public function getJson()
   {
-    return json_decdoe($this->body, true);
+    return json_decode($this->body, true);
   }
 
   /**
