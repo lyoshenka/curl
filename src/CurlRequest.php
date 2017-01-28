@@ -18,6 +18,7 @@ class CurlRequest
     'cookie'           => null,
     'send_json_body'   => false,
     'retry'            => false,
+    'basic_auth'       => null,
   ];
 
   public function __construct($method = Curl::GET, $url = null, $params = [], $options = [])
@@ -65,7 +66,7 @@ class CurlRequest
 
   public function setOptions(array $options)
   {
-    foreach($options as $name => $value)
+    foreach ($options as $name => $value)
     {
       $this->setOption($name, $value);
     }
@@ -78,6 +79,12 @@ class CurlRequest
     {
       throw new \DomainException('Invalid option: ' . $name);
     }
+
+    if ($name == 'basic_auth' && (!is_array($value) || count($value) != 2))
+    {
+      throw new \UnexpectedValueException('"basic_auth" option must be an array of the form [username, password]');
+    }
+
     $this->options[$name] = $value;
     return $this;
   }
@@ -116,14 +123,19 @@ class CurlRequest
     return isset($this->options['headers'][$name]) ? $this->options['headers'][$name] : null;
   }
 
+  public function setBasicAuthHeader($username, $password)
+  {
+    $this->setHeader('Authentication', 'Basic ' . base64_encode($username . ':' . $password));
+  }
+
   protected function formatHeadersForCurl()
   {
     $headers = [];
-    foreach($this->options['headers'] as $name => $value)
+    foreach ($this->options['headers'] as $name => $value)
     {
       if (is_array($value))
       {
-        foreach($value as $headerValue)
+        foreach ($value as $headerValue)
         {
           $headers[] = "$name: $headerValue";
         }
@@ -158,6 +170,16 @@ class CurlRequest
     if ($this->method == Curl::GET && $this->params)
     {
       $urlWithParams .= (strpos($urlWithParams, '?') === false ? '?' : '&') . http_build_query($this->params);
+    }
+
+    if ($this->options['send_json_body'] && !$this->getHeader('Content-Type'))
+    {
+      $this->setHeader('Content-Type', 'application/json');
+    }
+
+    if ($this->options['basic_auth'])
+    {
+      $this->setBasicAuthHeader($this->options['basic_auth'][0], $this->options['basic_auth'][1]);
     }
 
     curl_setopt_array($ch, [
