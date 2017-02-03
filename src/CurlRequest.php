@@ -123,11 +123,6 @@ class CurlRequest
     return isset($this->options['headers'][$name]) ? $this->options['headers'][$name] : null;
   }
 
-  public function setBasicAuthHeader($username, $password)
-  {
-    $this->setHeader('Authentication', 'Basic ' . base64_encode($username . ':' . $password));
-  }
-
   protected function formatHeadersForCurl()
   {
     $headers = [];
@@ -179,7 +174,7 @@ class CurlRequest
 
     if ($this->options['basic_auth'])
     {
-      $this->setBasicAuthHeader($this->options['basic_auth'][0], $this->options['basic_auth'][1]);
+      $this->setOption('password', $this->options['basic_auth'][0] . ':' . $this->options['basic_auth'][1]);
     }
 
     curl_setopt_array($ch, [
