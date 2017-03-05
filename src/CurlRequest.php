@@ -80,7 +80,7 @@ class CurlRequest
       throw new \DomainException('Invalid option: ' . $name);
     }
 
-    if ($name == 'basic_auth' && (!is_array($value) || count($value) != 2))
+    if ($name == 'basic_auth' && $value && (!is_array($value) || count($value) != 2))
     {
       throw new \UnexpectedValueException('"basic_auth" option must be an array of the form [username, password]');
     }
