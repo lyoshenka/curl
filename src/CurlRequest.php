@@ -254,6 +254,7 @@ class CurlRequest
       if ($this->options['retry'] && is_numeric($this->options['retry']) && $this->options['retry'] > 0)
       {
         $this->options['retry'] -= 1;
+        curl_close($ch);
         return $this->send($this->method, $this->url, $this->params, $this->options);
       }
       throw new CurlException($ch);
